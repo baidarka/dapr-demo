@@ -1,0 +1,19 @@
+version: 1
+common:
+  resourcesPath: ./components/local
+
+apps:
+  - appID: order-receiver
+    appDirPath: ./src/OrderReceiver
+    appPort: 5010
+    command: ["dotnet", "run", "--urls", "http://+:5010"]
+
+  - appID: order-processor
+    appDirPath: ./src/OrderProcessor
+    appPort: 5011
+    command: ["dotnet", "run", "--urls", "http://+:5011"]
+
+  - appID: order-fulfillment
+    appDirPath: ./src/OrderFulfillment
+    appPort: 5012
+    command: ["dotnet", "run", "--urls", "http://+:5012"]

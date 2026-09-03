@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-fulfillment
+  namespace: dapr-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-fulfillment
+  template:
+    metadata:
+      labels:
+        app: order-fulfillment
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "order-fulfillment"
+        dapr.io/app-port: "8080"
+        dapr.io/log-level: "info"
+    spec:
+      containers:
+        - name: order-fulfillment
+          image: order-fulfillment:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ASPNETCORE_URLS
+              value: http://+:8080
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "50m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"

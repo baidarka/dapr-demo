@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-receiver
+  namespace: dapr-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-receiver
+  template:
+    metadata:
+      labels:
+        app: order-receiver
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "order-receiver"
+        dapr.io/app-port: "8080"
+        dapr.io/log-level: "info"
+    spec:
+      containers:
+        - name: order-receiver
+          image: order-receiver:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ASPNETCORE_URLS
+              value: http://+:8080
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "50m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-receiver
+  namespace: dapr-demo
+spec:
+  selector:
+    app: order-receiver
+  ports:
+    - port: 80
+      targetPort: 8080
+  type: ClusterIP
