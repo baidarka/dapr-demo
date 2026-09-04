@@ -19,8 +19,8 @@
 
   Searched for 1 pattern, read 1 file, listed 1 directory (ctrl+o to expand)
 
-● Bash(cat /home/bernardb/repos/dapr-demo/README.md && git -C
-      /home/bernardb/repos/dapr-demo log --oneline -10)
+● Bash(cat /home/baidarka/repos/dapr-demo/README.md && git -C
+      /home/baidarka/repos/dapr-demo log --oneline -10)
   ⎿  Error: Exit code 128
      fatal: your current branch 'main' does not have any commits yet
 
@@ -42,7 +42,7 @@
       9 ## Dapr
      … +18 lines (ctrl+o to expand)
 
-● Created /home/bernardb/repos/dapr-demo/CLAUDE.md. Since the repo has no code
+● Created /home/baidarka/repos/dapr-demo/CLAUDE.md. Since the repo has no code
   yet, it's intentionally minimal — just the project context and a Dapr primer.
   Update it once you add services, define the tech stack, and establish
   build/test commands.
@@ -289,11 +289,11 @@
       28 +record FulfillmentState(string OrderId, string Status, DateTime
          + FulfilledAt);                                                 
 
-● Bash(rm /home/bernardb/repos/dapr-demo/src/OrderProcessor/Worker.cs
-      /home/bernardb/repos/dapr-demo/src/OrderFulfillment/Worker.cs && dotnet
-      build /home/bernardb/repo…)
+● Bash(rm /home/baidarka/repos/dapr-demo/src/OrderProcessor/Worker.cs
+      /home/baidarka/repos/dapr-demo/src/OrderFulfillment/Worker.cs && dotnet
+      build /home/baidarka/repo…)
   ⎿    Determining projects to restore...
-       Restored /home/bernardb/repos/dapr-demo/src/OrderFulfillment/OrderFu
+       Restored /home/baidarka/repos/dapr-demo/src/OrderFulfillment/OrderFu
      lfillment.csproj (in 413 ms).
      … +15 lines (ctrl+o to expand)
 
@@ -348,8 +348,8 @@
       3 **/bin
       4 **/obj
 
-● Bash(mkdir -p /home/bernardb/repos/dapr-demo/components/local
-      /home/bernardb/repos/dapr-demo/components/k8s)
+● Bash(mkdir -p /home/baidarka/repos/dapr-demo/components/local
+      /home/baidarka/repos/dapr-demo/components/k8s)
   ⎿  Done
 
 ● Write(components/local/pubsub.yaml)
@@ -408,7 +408,7 @@
       10     - name: redisHost
      … +5 lines (ctrl+o to expand)
 
-● Bash(mkdir -p /home/bernardb/repos/dapr-demo/deploy)
+● Bash(mkdir -p /home/baidarka/repos/dapr-demo/deploy)
   ⎿  Done
 
 ● Write(deploy/namespace.yaml)
@@ -633,9 +633,9 @@
 ● Bash(dotnet build -c Release 2>&1 | tail -8 && echo "---" && find . -not -path
       './.git/*' -not -path '*/bin/*' -not -path '*/obj/*' -not -path
       '*/node_modules/*' | s…)
-  ⎿    OrderProcessor -> /home/bernardb/repos/dapr-demo/src/OrderProcessor/
+  ⎿    OrderProcessor -> /home/baidarka/repos/dapr-demo/src/OrderProcessor/
      bin/Release/net9.0/OrderProcessor.dll
-       OrderFulfillment -> /home/bernardb/repos/dapr-demo/src/OrderFulfillm
+       OrderFulfillment -> /home/baidarka/repos/dapr-demo/src/OrderFulfillm
      … +61 lines (ctrl+o to expand)
 
 ● Everything builds clean (0 errors, 0 warnings). Here's what was set up:
@@ -894,18 +894,18 @@
 
 ❯ commit this                                                                   
 
-● Bash(git -C /home/bernardb/repos/dapr-demo status)
+● Bash(git -C /home/baidarka/repos/dapr-demo status)
   ⎿  On branch main
      Changes not staged for commit:
        (use "git add <file>..." to update what will be committed)
      … +16 lines (ctrl+o to expand)
 
-● Bash(git -C /home/bernardb/repos/dapr-demo log --oneline -5)
+● Bash(git -C /home/baidarka/repos/dapr-demo log --oneline -5)
   ⎿  470b3f9 initial commit
 
-● Bash(git -C /home/bernardb/repos/dapr-demo add CLAUDE.md README.md
+● Bash(git -C /home/baidarka/repos/dapr-demo add CLAUDE.md README.md
       .dockerignore .gitignore components/ dapr-demo.sln dapr.yaml deploy/ src/
-      && git -C /home/bernardb…)
+      && git -C /home/baidarka…)
   ⎿  [main 536e44b] Add .NET 9 Dapr order-processing pipeline with Kubernet
      es support
       34 files changed, 1261 insertions(+), 12 deletions(-)
