@@ -1,5 +1,9 @@
 # DAPR Demo
 
+## Intro
+
+Private experiment with Claude (Sonnet 4.x).
+
 A .NET 9 Dapr demo on Kubernetes: an order-processing pipeline that receives an order, processes it (saves state), and triggers fulfillment — demonstrating pub/sub messaging and state management via the Dapr sidecar pattern.
 
 ## Architecture
