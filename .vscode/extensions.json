@@ -1,0 +1,7 @@
+{
+    "recommendations": [
+        "davidanson.vscode-markdownlint",
+        "donjayamanne.githistory",
+        "ms-dotnettools.csdevkit"
+    ]
+}
