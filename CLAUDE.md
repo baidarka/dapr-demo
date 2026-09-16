@@ -28,11 +28,22 @@ OrderReceiver  ──publish──▶  [orderpubsub / orders topic]
 **Dapr components** (defined in `components/`):
 - `orderpubsub` — Redis-backed pub/sub broker
 - `orderstate` — Redis-backed state store
+- `orders-resiliency` — Resiliency spec (retries + circuit breakers) for both of the above
 
 **Key Dapr patterns used**:
 - `DaprClient.PublishEventAsync` for publishing messages
 - `[Topic("orderpubsub", "topic-name")]` attribute + `app.MapSubscribeHandler()` for subscriptions
 - `DaprClient.SaveStateAsync` for state persistence
+
+## Reliability
+
+Messages are delivered at-least-once and are never silently dropped:
+
+- **Redelivery**: `orderpubsub` (`components/*/pubsub.yaml`) sets `processingTimeout`/`redeliverInterval` so a message that's claimed but never acked (handler crashes, pod restarts) is redelivered from the Redis stream.
+- **Retries**: `components/*/resiliency.yaml` defines a `Resiliency` policy scoped to all three apps, applying exponential-backoff retries + a circuit breaker to `orderpubsub` (inbound delivery and outbound publish) and `orderstate` (save/get). No retry logic lives in application code — it's declarative sidecar config.
+- **Idempotency**: because retries/redelivery mean a subscriber can see the same message twice, `OrderProcessor` and `OrderFulfillment` check existing state (`GetStateAndETagAsync`) before processing and use `TrySaveStateAsync` (ETag-guarded) to avoid double-processing a duplicate delivery.
+- **Dead-lettering**: each subscription (`orders`, `fulfillment`) declares a `deadLetterTopic` (`orders-deadletter`, `fulfillment-deadletter`). Once sidecar retries are exhausted, the message is routed there instead of being dropped; a small handler in the same service persists it as state with status `"Failed"` so it stays visible for investigation/replay rather than being lost.
+- **Publish failures**: `OrderReceiver` and `OrderProcessor` catch publish exceptions explicitly and return a 5xx (after the sidecar's own retries are exhausted) so the caller/broker knows to retry, rather than swallowing the failure.
 
 ## Commands
 

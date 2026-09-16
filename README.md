@@ -92,7 +92,11 @@ docker build -t order-fulfillment:latest -f src/OrderFulfillment/Dockerfile src/
 If using a local cluster (e.g. kind), load the images:
 
 ```bash
-kind load docker-image order-receiver:latest order-processor:latest order-fulfillment:latest
+kind load docker-image \
+  order-receiver:latest \
+  order-processor:latest \
+  order-fulfillment:latest \
+  -n desktop
 ```
 
 Apply all manifests:
@@ -102,6 +106,15 @@ kubectl apply -f deploy/namespace.yaml
 kubectl apply -f deploy/redis.yaml
 kubectl apply -f components/k8s/
 kubectl apply -f deploy/
+```
+
+Or, force a reload:
+```bash
+ kubectl rollout restart \
+  deployment/order-receiver \
+  deployment/order-processor \
+  deployment/order-fulfillment \
+  -n dapr-demo
 ```
 
 Forward the receiver port to test:
