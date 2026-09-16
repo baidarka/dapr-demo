@@ -10,3 +10,12 @@ spec:
       value: localhost:6379
     - name: redisPassword
       value: ""
+    # At-least-once delivery: messages stay claimed-but-unacked in the Redis
+    # stream until the handler responds; if a consumer dies mid-processing,
+    # the message is redelivered instead of lost.
+    - name: processingTimeout
+      value: "15s"
+    - name: redeliverInterval
+      value: "5s"
+    - name: concurrency
+      value: "10"
